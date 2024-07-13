@@ -64,9 +64,28 @@ const images = [
     },
   ];
 
+  const galleryMarkup = createGalleryMarkup(images);
+
   const gallery = document.querySelector('.gallery')
 
+  const fullImage = gallery.dataset.source
 
+
+
+gallery.addEventListener('click', openFullSize)
+
+  function openFullSize(event) {
+    event.preventDefault()
+
+    if (event.target === event.currentTarget) {
+        return
+    }
+    const src = event.target.getAttribute('data-source')
+    const instance = basicLightbox.create(`
+        <img src="${src}" width="800" height="600">
+    `)
+    instance.show()
+  }
 
   function createGalleryMarkup(images) {
     return images
@@ -82,7 +101,5 @@ const images = [
   </a>
 </li>`).join('')
   }
-
-  const galleryMarkup = createGalleryMarkup(images);
 
   gallery.insertAdjacentHTML('beforeend', galleryMarkup)
